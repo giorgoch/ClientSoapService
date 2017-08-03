@@ -1,0 +1,77 @@
+to version einai 
+
+0.12.1 
+
+H 
+
+0.13.2   alla pote 0.13.1 giati kola
+
+kai auto edo  gia online 
+<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.12.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaLanguage>WSDL</schemaLanguage>
+					<generatePackage>hello.wsdl</generatePackage>
+					<schemas>
+						<schema>
+							<url>http://www.webservicex.com/stockquote.asmx?wsdl</url>
+						</schema>
+					</schemas>
+				</configuration>
+			</plugin>
+			
+			kai auto edo douleueoun gia topika 
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>${maven-jaxb2-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>${project.basedir}/src/main/resources/wsdl/</schemaDirectory>
+					<generatePackage>com.soap.ws</generatePackage>
+					<schemaIncludes>
+						<include>*.wsdl</include>
+					</schemaIncludes>
+				</configuration>
+			</plugin>	 
+			 
+			 
+			 https://ec.europa.eu/taxation_customs/tin/checkTinService.wsdl
+			 <plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.12.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaLanguage>WSDL</schemaLanguage>
+					<generatePackage>com.eu.service</generatePackage>
+					<schemas>
+						<schema>
+							<url>https://ec.europa.eu/taxation_customs/tin/checkTinService.wsdl</url>
+						</schema>
+					</schemas>
+				</configuration>
+			</plugin>
+			 
+			

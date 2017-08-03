@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:ec.europa.eu:taxud:tin:services:checkTin"
+	xmlns:tns1="urn:ec.europa.eu:taxud:tin:services:checkTin:types"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:impl="urn:ec.europa.eu:taxud:tin:services:checkTin"
+	xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<xsd:documentation>
+		1. Disclaimer
+		-------------
+		The information published
+		and the positions expressed on this European
+		TIN Portal are those of
+		the authors and do not necessarily reflect the
+		views of the European
+		Commission. While the European TIN Portal is run
+		by the European
+		Commission, responsibility for its content is shared
+		between the
+		Commission and individual EU Member States: content pages
+		are either
+		"European" in nature or "Member State" pages, where each EU
+		Member
+		State is responsible for the content and the links on its own
+		pages.
+
+		The European Commission maintains this European TIN Portal to allow
+		persons subject to a specific tax reporting obligation imposed to them
+		by European or national legislation, and having an Internet access to:
+		* obtain information on the national systems of identification of
+		taxpayers and more specifically on the Tax Identification Numbers
+		(TINs) and
+		* use a TIN online check module for checking whether the
+		syntax (i.e.
+		algorithm) of a TIN is valid or, when the specifications
+		of the syntax
+		(i.e. algorithm) are not available, whether the structure
+		of the TIN
+		is valid. As such, the TIN online check module neither
+		confirms the
+		existence and actual allocation of a TIN nor the identity
+		of a person.
+		The TIN online check module only confirms that, on the
+		basis of the
+		specifications provided by the EU Member States to the
+		European
+		Commission, the TIN specified corresponds to the general
+		structure of
+		TINs designed and in force in a country and, if explicitly
+		stated, it
+		corresponds to the algorithm designed and in force in that
+		country.
+
+		Any other use and any extraction and use of the information
+		and data
+		which is not in conformity with these objectives as well as
+		the
+		copyright notices and rules relating to the protection of personal
+		data and privacy as described hereafter are strictly forbidden.
+
+		This
+		information is:
+		* of a general nature only and is not intended to
+		address the specific
+		circumstances of any particular individual or
+		entity;
+		* not necessarily comprehensive, complete, accurate or up to
+		date;
+		* sometimes linked to external sites over which the Commission
+		services
+		have no control and for which the Commission assumes no
+		responsibility;
+		* not professional or legal advice (if you need
+		specific advice, you
+		should always consult a suitably qualified
+		professional).
+
+		Our goal is to keep this European TIN Portal and the TIN
+		online check
+		module timely and accurate. If errors are brought to our
+		attention, we
+		will do our best to correct them. EU Member States will
+		notify the
+		European Commission of any relevant change as soon as
+		possible, and
+		the European Commission will update the relevant pages as
+		soon as
+		possible according to the existing planning for modifications
+		and
+		maintenance.
+
+		Please note that it cannot be guaranteed that a
+		document available on-line
+		exactly reproduces an officially adopted
+		text. Only European Union
+		legislation published in paper editions of
+		the Official Journal of the
+		European Union and national legislation
+		published in compliance with
+		applicable national legal provisions are
+		deemed authentic.
+
+		It is our goal to minimise disruption caused by
+		technical errors.
+		However, some data or information on the European TIN
+		Portal may have
+		been created or structured in files or formats that are
+		not error-free
+		and we cannot guarantee that our service will not be
+		interrupted or
+		otherwise affected by such problems. The Commission
+		accepts no
+		responsibility with regard to such problems incurred as a
+		result of
+		using the European TIN Portal or any linked external sites.
+
+		This disclaimer is neither intended to limit the liability of the
+		Commission in contravention of any requirements laid down in
+		applicable national law nor exclude its liability for matters which
+		may not be excluded under that law.
+
+
+		Usage:
+		The countryCode input
+		parameter must follow the pattern [A-Z]{2}
+		The tinNumber input
+		parameter must not be empty
+
+		In case of problem, the returned
+		FaultString can take the following
+		specific values:
+		- INVALID_INPUT: The
+		provided CountryCode is invalid or the TIN number
+		is empty;
+		-
+		NO_INFORMATION: The Member State does not provide validity
+		information;
+		- SERVICE_UNAVAILABLE: The SOAP service is unavailable,
+		try again
+		later;
+		- SERVER_BUSY: The service can't process your request.
+		Try again
+		latter.
+	</xsd:documentation>
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="qualified"
+			elementFormDefault="qualified"
+			targetNamespace="urn:ec.europa.eu:taxud:tin:services:checkTin:types"
+			xmlns="urn:ec.europa.eu:taxud:tin:services:checkTin:types">
+			<xsd:element name="checkTin">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="countryCode" type="xsd:string" />
+						<xsd:element name="tinNumber" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="checkTinResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="countryCode" type="xsd:string" />
+						<xsd:element name="tinNumber" type="xsd:string" />
+						<xsd:element name="requestDate" type="xsd:date" />
+						<xsd:element name="validStructure" type="xsd:boolean" />
+						<xsd:element name="validSyntax" type="xsd:boolean"
+							minOccurs="0" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="checkTinRequest">
+		<wsdl:part name="parameters" element="tns1:checkTin">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="checkTinResponse">
+		<wsdl:part name="parameters" element="tns1:checkTinResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="checkTinPortType">
+		<wsdl:operation name="checkTin">
+			<wsdl:input name="checkTinRequest" message="impl:checkTinRequest">
+			</wsdl:input>
+			<wsdl:output name="checkTinResponse" message="impl:checkTinResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="checkTinBinding" type="impl:checkTinPortType">
+		<wsdlsoap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="checkTin">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="checkTinRequest">
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="checkTinResponse">
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="checkTinService">
+		<wsdl:port name="checkTinPort" binding="impl:checkTinBinding">
+			<wsdlsoap:address
+				location="https://ec.europa.eu/taxation_customs/tin/services/checkTinService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
